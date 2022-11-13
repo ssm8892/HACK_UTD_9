@@ -3,11 +3,16 @@ import React, { Component } from "react";
 export class TileRed extends Component {
   constructor(props) {
     super(props);
-    this.state = {}; 
+    this.state = {};  
   }
 
   render() {
-    return <>Do not click!</>;
+    if(this.props.displayResults){
+      return <div>{this.props.time}</div>;
+  }
+    else{
+      return (<div>Wait for green</div>);
+    }
   }
 }
 

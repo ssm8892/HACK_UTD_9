@@ -1,0 +1,21 @@
+.RedPanel{
+    width: 10vh;
+    height: 10vh;
+    background-color: red;
+    cursor: pointer;
+    /* top: 0;
+    left: 0;
+    z-index: 1;
+    animation: move 5s linear infinite; */
+}
+
+.GreenPanel{
+    width: 100px;
+    height: 100px;
+    background-color: green;
+    cursor: pointer;
+    /* top: 0;
+    left: 0;
+    z-index: 1;
+    animation: move 5s linear infinite; */
+}

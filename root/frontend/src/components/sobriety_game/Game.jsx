@@ -1,27 +1,26 @@
 import React, { Component } from "react";
 import TileRed from "./TileRed.jsx";
 import TileGreen from "./TileGreen.jsx";
+import "./Game.css";
 
 export class Game extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tiles: [],
-      tileClickedGreen: false,
-      score: 0,
       timer: 0,
       displayGreenTile: false,
+      timerStarted: 0,
+      displayRedTile: true,
+      endTime: 0,
+      timeout: false,
     };
-  }
-
-  handleRedTileClick() {
-    this.setState({
-      tileClickedRed: true,
-    });
+    this.handleGreenTileClick = this.handleGreenTileClick.bind(this);
   }
 
   handleGreenTileClick() {
-    this.setState({ tileClickedGreen: true });
+    console.log(this.state.displayGreenTile);
+    this.setState({ endTime: new Date().getTime(), tileClickedGreen: true, displayGreenTile: false, displayResults: true });
+    
   }
 
   tileRedTimer = () => {
@@ -34,24 +33,27 @@ export class Game extends Component {
     let timeOut = Math.floor(Math.random() * (maxRange - minRange)) + minRange;
 
     setTimeout(() => {
-      this.setState({ displayGreenTile: true });
+      this.setState({ displayGreenTile: true , displayRedTile: false, timeout: true});
     }, timeOut);
   };
 
   render() {
-    if (this.state.displayGreenTile === true) {
-      this.tileRedTimer();
-
+    if (this.state.displayGreenTile !== false) {
+        this.setState({timerStarted : new Date().getTime()});
       return (
-        <>
-          <TileGreen onClick={this.handleRedTileClick}></TileGreen>
-        </>
+        <div className="GreenPanel" onClick={this.handleGreenTileClick}>
+            <TileGreen ></TileGreen>
+        </div>
       );
     } else {
+        if(this.state.timeout === false){
+            this.tileRedTimer();
+        }
+        this.setState({timer: this.state.endTime - this.state.timerStarted});
       return (
-        <>
-          <TileRed onClick={this.handleGreenTileClick}></TileRed>
-        </>
+        <div className='RedPanel'>
+            <TileRed displayResults={this.state.displayResults} time={this.state.timer}></TileRed>
+        </div>
       );
     }
   }
